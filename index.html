@@ -357,7 +357,10 @@
             </div>
             <div>
                 <label for="alimento-nombre">Alimento/Bebida:</label>
-                <input type="text" id="alimento-nombre" required>
+                <input type="text" id="alimento-nombre" list="lista-alimentos" required>
+                <datalist id="lista-alimentos">
+                    <!-- Las opciones se llenarán con JavaScript -->
+                </datalist>
             </div>
             <div>
                 <label for="alimento-cantidad">Cantidad (porciones/tazas/etc.):</label>
@@ -366,6 +369,10 @@
             <div>
                 <label for="alimento-carbohidratos">Carbohidratos (g):</label>
                 <input type="number" id="alimento-carbohidratos">
+            </div>
+            <div>
+                <label for="alimento-calorias">Calorías (kcal):</label>
+                <input type="number" id="alimento-calorias">
             </div>
             <div>
                 <label for="alimento-notas">Observaciones:</label>
@@ -383,6 +390,7 @@
                     <th>Alimento</th>
                     <th>Cantidad</th>
                     <th>Carbohidratos</th>
+                    <th>Calorías</th>
                     <th>Observaciones</th>
                     <th>Acciones</th>
                 </tr>
@@ -442,18 +450,22 @@
             <h3>Tu equipo de atención prenatal</h3>
             
             <h4>Obstetra/Ginecólogo</h4>
-            <p>Responsable del seguimiento de tu embarazo y diabetes gestacional.</p>
+            <p><strong>Dr. Javier Manotas</strong> - Responsable del seguimiento de tu embarazo y diabetes gestacional.</p>
+            <p><strong>Teléfono:</strong> +57 300 123 4567</p>
             <p><strong>Horario de consultas:</strong> Lunes a Viernes, 8am - 4pm</p>
             
             <h4>Nutricionista</h4>
-            <p>Te ayudará con tu plan de alimentación personalizado.</p>
+            <p><strong>Dra. María Fernanda López</strong> - Te ayudará con tu plan de alimentación personalizado.</p>
+            <p><strong>Teléfono:</strong> +57 310 987 6543</p>
             <p><strong>Horario de consultas:</strong> Martes y Jueves, 9am - 2pm</p>
             
             <h4>Educador en Diabetes</h4>
-            <p>Te enseñará a manejar tu diabetes gestacional día a día.</p>
+            <p><strong>Dr. Carlos Andrés Gómez</strong> - Te enseñará a manejar tu diabetes gestacional día a día.</p>
+            <p><strong>Teléfono:</strong> +57 315 456 7890</p>
             
             <h4>Endocrinólogo</h4>
-            <p>Especialista en manejo de diabetes durante el embarazo (si es necesario).</p>
+            <p><strong>Dra. Laura Patricia Ramírez</strong> - Especialista en manejo de diabetes durante el embarazo (si es necesario).</p>
+            <p><strong>Teléfono:</strong> +57 320 123 7890</p>
             
             <h3 style="margin-top: 20px;">Atención de Urgencias</h3>
             <p>En caso de presentar:</p>
@@ -500,6 +512,53 @@
     </section>
 
     <script>
+        // Base de datos de alimentos con sus calorías
+        const alimentosDB = {
+            // Cereales y Tubérculos
+            "Arroz blanco cocido": { porcion: "½ taza", calorias: 70 },
+            "Tortilla de maíz": { porcion: "1 pieza", calorias: 70 },
+            "Bolillo sin migajón": { porcion: "½ pieza", calorias: 70 },
+            "Pan de caja (Blanco o integral)": { porcion: "½ pieza", calorias: 70 },
+            "Pasta hervida": { porcion: "½ pieza", calorias: 70 },
+            "Cereal con azúcar": { porcion: "1/3 de taza", calorias: 70 },
+            "Papa (hervida o al horno)": { porcion: "½ pieza", calorias: 70 },
+            "Galleta maría": { porcion: "5 piezas", calorias: 70 },
+            "Pan dulce (cuernito, concha)": { porcion: "1 pieza", calorias: 115 },
+            
+            // Verduras
+            "Jitomate bola": { porcion: "1 pieza", calorias: 25 },
+            "Cebolla blanca cruda": { porcion: "½ taza", calorias: 25 },
+            "Chile de árbol": { porcion: "4 piezas", calorias: 25 },
+            "Zanahoria cruda": { porcion: "½ taza", calorias: 25 },
+            "Calabacita cocida": { porcion: "½ taza", calorias: 25 },
+            "Chayote cocido": { porcion: "½ pieza", calorias: 25 },
+            "Espinaca cruda": { porcion: "2 tazas", calorias: 25 },
+            
+            // Alimentos de origen animal
+            "Bistec de res": { porcion: "30 gramos", calorias: 40 },
+            "Pechuga de pollo azada": { porcion: "30 gramos", calorias: 40 },
+            "Blanco de nilo (pescado)": { porcion: "40 gramos", calorias: 40 },
+            "Atún en agua": { porcion: "40 gramos", calorias: 40 },
+            "Pechuga de pavo": { porcion: "2 rebanadas", calorias: 40 },
+            "Falda o pierna de cerdo": { porcion: "40 gramos", calorias: 55 },
+            "Queso fresco": { porcion: "40 gramos", calorias: 55 },
+            "Queso panela": { porcion: "40 gramos", calorias: 55 },
+            "Queso Oaxaca": { porcion: "30 gramos", calorias: 55 },
+            "Jamón de pavo y/o pierna": { porcion: "2 rebanadas", calorias: 55 },
+            
+            // Leche y derivados
+            "Leche entera": { porcion: "1 taza", calorias: 150 },
+            "Leche descremada": { porcion: "1 taza", calorias: 95 },
+            "Leche evaporada": { porcion: "1/4 de taza", calorias: 150 },
+            "Yogurt natural": { porcion: "1 taza", calorias: 150 },
+            
+            // Leguminosas
+            "Frijol": { porcion: "1/2 taza", calorias: 120 },
+            "Garbanzo": { porcion: "1/2 taza", calorias: 120 },
+            "Habas": { porcion: "1/2 taza", calorias: 120 },
+            "Lentejas": { porcion: "1/2 taza", calorias: 120 }
+        };
+
         // Sistema de pestañas
         function openTab(evt, tabName) {
             const tabContents = document.getElementsByClassName("tab-content");
@@ -517,6 +576,30 @@
             localStorage.setItem('activeTab', tabName);
         }
         
+        // Llenar lista de alimentos en el datalist
+        function llenarListaAlimentos() {
+            const datalist = document.getElementById('lista-alimentos');
+            datalist.innerHTML = '';
+            
+            Object.keys(alimentosDB).forEach(alimento => {
+                const option = document.createElement('option');
+                option.value = alimento;
+                option.textContent = `${alimento} (${alimentosDB[alimento].porcion}: ${alimentosDB[alimento].calorias} kcal)`;
+                datalist.appendChild(option);
+            });
+        }
+        
+        // Calcular calorías automáticamente
+        function calcularCalorias() {
+            const alimentoNombre = document.getElementById('alimento-nombre').value;
+            const cantidad = parseFloat(document.getElementById('alimento-cantidad').value) || 1;
+            
+            if (alimentosDB[alimentoNombre]) {
+                const caloriasBase = alimentosDB[alimentoNombre].calorias;
+                document.getElementById('alimento-calorias').value = caloriasBase * cantidad;
+            }
+        }
+        
         // Al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             const activeTab = localStorage.getItem('activeTab') || 'cronograma';
@@ -530,11 +613,16 @@
                 }
             }
             
+            llenarListaAlimentos();
             cargarDatos();
             
             // Calcular IMC automáticamente
             document.getElementById('clap-peso')?.addEventListener('input', calcularIMC);
             document.getElementById('clap-talla')?.addEventListener('input', calcularIMC);
+            
+            // Eventos para cálculo de calorías
+            document.getElementById('alimento-nombre').addEventListener('change', calcularCalorias);
+            document.getElementById('alimento-cantidad').addEventListener('input', calcularCalorias);
         });
         
         // Calcular IMC
@@ -627,6 +715,7 @@
                         <td>${alimento.nombre}</td>
                         <td>${alimento.cantidad}</td>
                         <td>${alimento.carbohidratos || '-'}</td>
+                        <td>${alimento.calorias || '-'}</td>
                         <td>${alimento.notas || '-'}</td>
                         <td><button onclick="eliminarRegistro('alimentos', '${alimento.id}')">Eliminar</button></td>
                     `;
@@ -711,13 +800,18 @@
             e.preventDefault();
             
             const alimentos = obtenerDatos('alimentos');
+            const alimentoNombre = document.getElementById('alimento-nombre').value;
+            const caloriasBase = alimentosDB[alimentoNombre]?.calorias || 0;
+            const cantidad = parseFloat(document.getElementById('alimento-cantidad').value) || 1;
+            
             const nuevoAlimento = {
                 id: Date.now().toString(),
-                nombre: document.getElementById('alimento-nombre').value,
+                nombre: alimentoNombre,
                 cantidad: document.getElementById('alimento-cantidad').value,
                 fecha: document.getElementById('alimento-fecha').value,
                 tiempo: document.getElementById('alimento-tiempo').value,
                 carbohidratos: document.getElementById('alimento-carbohidratos').value || null,
+                calorias: caloriasBase * cantidad,
                 notas: document.getElementById('alimento-notas').value || null
             };
             
