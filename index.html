@@ -176,7 +176,79 @@
                 grid-column: span 1;
             }
         }
-    </style>
+/* Estilos para sección farmacológica */
+#tabla-farmacologica th {
+    background-color: #f3e5ff;
+}
+
+#tabla-farmacologica tr:nth-child(even) {
+    background-color: #faf5ff;
+}
+
+#lista-medicamentos {
+    width: 100%;
+}
+/* === ESTILOS PARA LA NUEVA SECCIÓN === */
+.educacion-farmacologica {
+    margin: 40px 0;
+    display: grid;
+    gap: 25px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(125, 87, 194, 0.1);
+    border-left: 4px solid #7e57c2;
+}
+
+.pasos-container {
+    display: grid;
+    gap: 12px;
+}
+
+.paso {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.numero-paso {
+    background: #7e57c2;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.zonas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.zona-item {
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid;
+    background: #faf5ff;
+}
+
+.almacenamiento-table {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.almacenamiento-table th {
+    background: #f3e5ff;
+}
+</style>
 </head>
 <body>
     <h1>Seguimiento para Gestantes con Diabetes Gestacional</h1>
@@ -186,6 +258,7 @@
         <div class="tab" onclick="openTab(event, 'glucometria')">Glucometría</div>
         <div class="tab" onclick="openTab(event, 'clap')">CLAP</div>
         <div class="tab" onclick="openTab(event, 'alimentos')">Alimentación</div>
+        <div class="tab" onclick="openTab(event, 'farmacologico')">💊 Farmacológico</div>
         <div class="tab" onclick="openTab(event, 'videos')">Videos Educativos</div>
         <div class="tab" onclick="openTab(event, 'contacto')">Profesionales</div>
     </div>
@@ -973,5 +1046,140 @@
             this.reset();
         });
     </script>
+<section id="farmacologico" class="tab-content">
+    <h2>💊 Seguimiento Farmacológico</h2>
+<div class="educacion-farmacologica">
+    <!-- Técnica de aplicación de insulina -->
+    <div class="info-card">
+        <h4><i class="icon">💉</i> Técnica Correcta de Aplicación de Insulina</h4>
+        <ol>
+            <li>Lavarse las manos con agua y jabón</li>
+            <li>Revisar que la insulina no esté vencida ni con grumos</li>
+            <li>Si usa NPH, mezclar suavemente rodando el frasco entre las manos</li>
+            <li>Limpiar el tapón de goma con alcohol</li>
+            <li>Inyectar aire al frasco equivalente a la dosis a extraer</li>
+            <li>Extraer la dosis exacta eliminando burbujas de aire</li>
+            <li>Pellizcar la piel y aplicar en ángulo de 45° (o 90° si usa pliegue adiposo)</li>
+            <li>Contar hasta 10 antes de retirar la aguja</li>
+        </ol>
+    </div>
+
+    <!-- Zonas de punción -->
+    <div class="info-card">
+        <h4><i class="icon">📍</i> Zonas Recomendadas y Rotación</h4>
+        <div class="zonas-container">
+            <div class="zona">
+                <h5>Abdomen</h5>
+                <p>5 cm alrededor del ombligo (absorción más rápida)</p>
+                <div class="rotacion">Rotar en cuadrantes</div>
+            </div>
+            <div class="zona">
+                <h5>Muslos</h5>
+                <p>Parte externa superior (absorción lenta)</p>
+                <div class="rotacion">Rotar de arriba a abajo</div>
+            </div>
+            <div class="zona">
+                <h5>Brazos</h5>
+                <p>Parte posterior superior (absorción media)</p>
+                <div class="rotacion">Rotar en espiral</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Almacenamiento -->
+    <div class="info-card">
+        <h4><i class="icon">❄️</i> Almacenamiento Correcto</h4>
+        <table class="almacenamiento-table">
+            <tr>
+                <th>Situación</th>
+                <th>Recomendación</th>
+                <th>Duración</th>
+            </tr>
+            <tr>
+                <td>Insulina sin abrir</td>
+                <td>Refrigerar (2-8°C)</td>
+                <td>Hasta fecha de vencimiento</td>
+            </tr>
+            <tr>
+                <td>Insulina en uso</td>
+                <td>Temperatura ambiente (<30°C)</td>
+                <td>28 días (excepto específico)</td>
+            </tr>
+            <tr>
+                <td>Viajes</td>
+                <td>Nevera portátil sin contacto directo con hielo</td>
+                <td>Máx. 30 días</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+    <form id="form-farmacologico">
+<div>
+            <label for="medicamento-nombre">Medicamento:</label>
+            <input type="text" id="medicamento-nombre" list="lista-medicamentos" required>
+            <datalist id="lista-medicamentos">
+                <option value="Metformina">
+                <option value="Insulina NPH">
+                <option value="Insulina rápida">
+                <option value="Ácido fólico">
+                <option value="Hierro">
+                <option value="Calcio">
+                <option value="Multivitamínico prenatal">
+            </datalist>
+        </div>
+        <div>
+            <label for="medicamento-dosis">Dosis:</label>
+            <input type="text" id="medicamento-dosis" placeholder="Ej: 500 mg, 10 UI" required>
+        </div>
+        <div>
+            <label for="medicamento-frecuencia">Frecuencia:</label>
+            <select id="medicamento-frecuencia" required>
+                <option value="">Seleccione...</option>
+                <option value="Una vez al día">Una vez al día</option>
+                <option value="Cada 12 horas">Cada 12 horas</option>
+                <option value="Cada 8 horas">Cada 8 horas</option>
+                <option value="Antes de alimentos">Antes de alimentos</option>
+                <option value="Después de alimentos">Después de alimentos</option>
+                <option value="Al acostarse">Al acostarse</option>
+            </select>
+        </div>
+        <div>
+            <label for="medicamento-fecha-inicio">Fecha de inicio:</label>
+            <input type="date" id="medicamento-fecha-inicio" required>
+        </div>
+        <div>
+            <label for="medicamento-observaciones">Observaciones:</label>
+            <textarea id="medicamento-observaciones" rows="3"></textarea>
+        </div>
+        <button type="submit">Registrar Medicamento</button>
+    </form>
+
+    <h3>Registro de Medicamentos</h3>
+    <table id="tabla-farmacologica">
+        <thead>
+            <tr>
+                <th>Medicamento</th>
+                <th>Dosis</th>
+                <th>Frecuencia</th>
+                <th>Inicio</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los registros aparecerán aquí -->
+        </tbody>
+    </table>
+
+    <div class="contact-card" style="margin-top: 30px;">
+        <h4>📌 Recomendaciones importantes:</h4>
+        <ul>
+            <li>Nunca suspenda medicamentos sin consultar a su médico</li>
+            <li>Reporte cualquier efecto secundario</li>
+            <li>Mantenga horarios consistentes</li>
+        </ul>
+    </div>
+</section>
 </body>
 </html>
